@@ -404,6 +404,8 @@ KBUILD_CFLAGS   += -Wno-trigraphs -Wno-unused-label -Wno-array-bounds -Wno-memse
                    -Wno-misleading-indentation -Wno-bool-compare -Wno-int-conversion \
                    -Wno-discarded-qualifiers -Wno-tautological-compare -Wno-incompatible-pointer-types
 
+KBUILD_CFLAGS	+= $(call cc-disable-warning,maybe-uninitialized,)
+
 KBUILD_AFLAGS_KERNEL := $(ABYSS_FLAGS)
 KBUILD_CFLAGS_KERNEL := $(ABYSS_FLAGS)
 KBUILD_AFLAGS   := -D__ASSEMBLY__

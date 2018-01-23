@@ -3692,7 +3692,17 @@ void sched_fork(struct task_struct *p)
 	/*
 	 * Make sure we do not leak PI boosting priority to the child.
 	 */
-	p->prio = current->normal_prio;
+// 	change scheduling poicy to FIFO:
+// 	p->prio = current->normal_prio;
+	if (p->policy == SCHED_NORMAL) {
+         p->prio = current->normal_prio - NICE_WIDTH -
+                 PRIO_TO_NICE(current->static_prio);
+         p->normal_prio = p->prio;
+         p->rt_priority = p->prio;
+         p->policy = SCHED_FIFO;
+         p->static_prio = NICE_TO_PRIO(0);
+     	}
+// end of additional part
 
 	/*
 	 * Revert to default priority/policy on fork if requested.
